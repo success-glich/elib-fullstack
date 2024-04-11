@@ -22,6 +22,7 @@ class UserServices {
     const existingUser = await this.userModel.findOne({ email });
     if (existingUser) {
       throw new Error("User already exists");
+      
     }
     const hashedPassword = await authHelper.hash(password);
 
@@ -41,8 +42,9 @@ class UserServices {
 
     return {registerUser,accessToken};
   }catch(err){
-    console.log("Error while register of user",err);
-    throw new Error("An error occurred while creating user.");
+    console.log("Error while register of user::",err);
+    
+    throw new Error(err as string);
   }
 
   }
