@@ -48,5 +48,27 @@ class UserServices {
   }
 
   }
+  async loginUser(email: string, password: string)  {
+
+   try {
+     const user = await this.userModel.findOne({ email });
+     if (!user) {
+       throw new Error("Invalid email or password");
+     }
+     const isPasswordValid = await authHelper.compareHash(password,user.password)
+     if (!isPasswordValid) {
+       throw new Error("Invalid email or password");
+     }
+     const accessToken =await TokenHelper.generateToken({sub:user._id});
+
+     const loggedInUser = JSON.parse(JSON.stringify(user));
+     delete loggedInUser.password;
+
+     return {accessToken,loggedInUser};
+   } catch (err) {
+    throw Error(err as string);
+    
+   }
+  };
 }
 export default UserServices;
