@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import createHttpError, { HttpError } from "http-errors";
 import { config } from "./config/config";
-import globalErrorHandler from "./middlewares/globalErrorHandler";
+import globalErrorHandler from "./middlewares/global.error.handler";
 import userRouter from "./user/user.router";
 import bookRouter from "./book/book.router";
 const app = express();
