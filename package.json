@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon server.ts"
+    "dev": "nodemon server.ts",
+    "start": "node server.js",
+    "eslint": "npm run eslint"
   },
   "keywords": [
     "rest",
@@ -15,9 +17,29 @@
   "author": "Saphal Ghorasaini <iamsaphal21@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/dotenv": "^8.2.0",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20.12.7",
+    "eslint": "^8.57.0",
+    "globals": "^15.0.0",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.6.0"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.1",
+    "multer": "^1.4.5-lts.1"
   }
 }
