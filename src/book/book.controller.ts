@@ -5,6 +5,7 @@ import CloudinaryService from "../helper/cloudinary";
 import BookModel from "./book.model";
 import bookServices from ".";
 import { User } from "../user/user.types";
+import { updatedBook } from "./book.types";
 
 interface UserRequest extends Request {
   user?: User | null;
@@ -59,7 +60,11 @@ const BookController = {
       next(createHttpError(500, "Error While creating book."));
     }
   },
-  deleteBookById: async (req: UserRequest, res: Response) => {
+  deleteBookById: async (
+    req: UserRequest,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const { id } = req.params;
 
@@ -86,6 +91,82 @@ const BookController = {
         .status(200)
         .json(new ApiResponse(200, null, "Book deleted successfully."));
     } catch (error) {}
+  },
+  updateBookById: async (
+    req: UserRequest,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { bookId } = req.params;
+      const { genre, title } = req.body;
+
+      const toBeUpdatedBook: updatedBook = { genre, title };
+
+      const book = await bookServices.getBookById(bookId);
+
+      if (!book) {
+        next(createHttpError(404, "Book not found!"));
+      }
+
+      // const createdBook = await bookServices.createBook({
+      //   genre,
+      //   title,
+      //   coverImage: coverImage?.secure_url!,
+      //   file: file?.secure_url!,
+      // });
+
+      if (
+        [genre, title].some(
+          (field) => field === undefined || field.trim() === ""
+        )
+      ) {
+        next(createHttpError(400, "All field are required"));
+      }
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      const coverImagePath = files?.coverImage[0]?.path;
+      const filePath = files?.file[0]?.path;
+
+      if (coverImagePath && filePath) {
+        await CloudinaryService.removeOnCloudinary(book?.coverImage!);
+        await CloudinaryService.removeOnCloudinary(book?.file!);
+
+        const coverImage = await CloudinaryService.uploadImage(coverImagePath);
+        const file = await CloudinaryService.uploadImage(filePath);
+
+        toBeUpdatedBook["coverImage"] = coverImage?.secure_url || "";
+        toBeUpdatedBook["file"] = file?.secure_url || "";
+      } else if (coverImagePath) {
+        await CloudinaryService.removeOnCloudinary(book?.coverImage!);
+
+        const coverImage = await CloudinaryService.uploadImage(coverImagePath);
+
+        toBeUpdatedBook["coverImage"] = coverImage?.secure_url || "";
+      } else if (filePath) {
+        await CloudinaryService.removeOnCloudinary(book?.file!);
+
+        const file = await CloudinaryService.uploadImage(filePath);
+
+        toBeUpdatedBook["file"] = file?.secure_url || "";
+      }
+
+      const newUpdatedBook = bookServices.updateBookById(
+        bookId,
+        toBeUpdatedBook
+      );
+
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(200, newUpdatedBook, "Book updated successfully.")
+        );
+    } catch (err) {
+      console.log("Error while updating book!");
+      if (err instanceof Error) {
+        next(createHttpError(500, err.message));
+      }
+      next(createHttpError(500, "Error While updating book."));
+    }
   },
 };
 export default BookController;

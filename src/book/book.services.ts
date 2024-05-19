@@ -10,6 +10,7 @@ interface CreateBookOptions {
   file: string;
 }
 import BookModel from "./book.model";
+import { updatedBook } from "./book.types";
 
 // }
 class BookService {
@@ -47,7 +48,7 @@ class BookService {
       throw new Error("Error getting book");
     }
   }
-  async updateBookById(id:string,options:CreateBookOptions){
+  async updateBookById(id:string,options:updatedBook){
     try {
       const book = await this.bookModel.findByIdAndUpdate(id,options,{new:true});
       return book;

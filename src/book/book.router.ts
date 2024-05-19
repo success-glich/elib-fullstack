@@ -17,6 +17,19 @@ bookRouter.post(
     ]),
    BookController.createBook
   );
+
+  bookRouter.put(
+    "/:bookId",
+    AuthMiddleware.isAuthenticated,
+    upload.fields([{
+    name:"coverImage",maxCount:1
+  },{
+    name:"file",maxCount:1
+  }]),
+  BookController.updateBookById
+  );
+
+
 // bookRouter.post('/login',UserController.loginUser);
 
 export default bookRouter;
