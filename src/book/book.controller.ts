@@ -60,16 +60,17 @@ const BookController = {
       next(createHttpError(500, "Error While creating book."));
     }
   },
+
   deleteBookById: async (
     req: UserRequest,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const { id } = req.params;
+      const { bookId } = req.params;
 
       //businessLogin
-      const toBeDeletedBook = await BookModel.findById(id);
+      const toBeDeletedBook = await BookModel.findById(bookId);
       if (!toBeDeletedBook) {
         return res
           .status(404)
@@ -87,10 +88,18 @@ const BookController = {
           );
       }
 
+      await CloudinaryService.removeOnCloudinary(toBeDeletedBook.coverImage);
+      await CloudinaryService.removeOnCloudinary(toBeDeletedBook.file);
+
       res
         .status(200)
         .json(new ApiResponse(200, null, "Book deleted successfully."));
-    } catch (error) {}
+    } catch (err) {
+      if (err instanceof Error) {
+        next(createHttpError(500, err.message));
+      }
+      next(createHttpError(500, "Error While creating book."));
+    }
   },
   updateBookById: async (
     req: UserRequest,
@@ -160,6 +169,26 @@ const BookController = {
         .json(
           new ApiResponse(200, newUpdatedBook, "Book updated successfully.")
         );
+    } catch (err) {
+      console.log("Error while updating book!");
+      if (err instanceof Error) {
+        next(createHttpError(500, err.message));
+      }
+      next(createHttpError(500, "Error While updating book."));
+    }
+  },
+  getAllBooks: async (
+    _: UserRequest,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      
+      const allBooks = await bookServices.getAllBooks();
+
+      return res.status(200).json(
+        new ApiResponse(200,allBooks,"Books found successfully!",)
+      )
     } catch (err) {
       console.log("Error while updating book!");
       if (err instanceof Error) {

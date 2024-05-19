@@ -8,26 +8,31 @@ import AuthMiddleware from '../middlewares/authenticate.middleware';
 
 const bookRouter =express.Router();
 
-bookRouter.post(
-    "/",
-    AuthMiddleware.isAuthenticated,  
-    upload.fields([
-      { name: "coverImage", maxCount: 1 },
-      { name: "file", maxCount: 1 },
-    ]),
-   BookController.createBook
-  );
+bookRouter.get("/",BookController.getAllBooks);
 
-  bookRouter.put(
-    "/:bookId",
-    AuthMiddleware.isAuthenticated,
+bookRouter.use(AuthMiddleware.isAuthenticated);
+
+bookRouter
+.route("/")
+.post( 
+  upload.fields([
+    { name: "coverImage", maxCount: 1 },
+    { name: "file", maxCount: 1 },
+  ]),
+ BookController.createBook
+)
+
+
+  bookRouter
+  .route("/:bookId")
+  .put(
     upload.fields([{
     name:"coverImage",maxCount:1
   },{
     name:"file",maxCount:1
   }]),
   BookController.updateBookById
-  );
+  ).delete(BookController.deleteBookById)
 
 
 // bookRouter.post('/login',UserController.loginUser);
