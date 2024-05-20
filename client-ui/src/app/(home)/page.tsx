@@ -1,6 +1,16 @@
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
+import ProductCard, { Product } from "./components/ProductCard";
+
+
+const products: Product[] = [
+  { id: "1", name: "Margartia Pizza", description: "This is a very tasty pizza", image: '/file.png', price: 400 },
+  { id: "2", name: "Margartia Pizza", description: "This is a very tasty pizza", image: '/file.png', price: 400 },
+  { id: "3", name: "Margartia Pizza", description: "This is a very tasty pizza", image: '/file.png', price: 400 },
+  { id: "4", name: "Margartia Pizza", description: "This is a very tasty pizza", image: '/file.png', price: 400 },
+  { id: "5", name: "Margartia Pizza", description: "This is a very tasty pizza", image: '/file.png', price: 400 }
+]
 
 
 export default function Home() {
@@ -33,15 +43,27 @@ export default function Home() {
 
         <div className="container py-12" >
 
-          <Tabs defaultValue="pizz" className="w-[400px]">
+          <Tabs defaultValue="pizz" >
             <TabsList>
               <TabsTrigger value="pizz" className="text-md">Pizza</TabsTrigger>
               <TabsTrigger value="beverages" className="text-md">Beverages</TabsTrigger>
             </TabsList>
-            <TabsContent value="pizz"> Pizza list
+            <TabsContent value="pizz">
+              <div className="grid grid-cols-4 gap-6 mt-6">
+                {
+                  products.map((product) => <ProductCard key={product.id} product={product} />)
+                }
+              </div>
 
             </TabsContent>
-            <TabsContent value="beverages">beverages Lists</TabsContent>
+            <TabsContent value="beverages">
+
+              <div className="grid grid-cols-4 gap-6 mt-6">
+                {
+                  products.map((product) => <ProductCard key={product.id} product={product} />)
+                }
+              </div>
+            </TabsContent>
           </Tabs>
         </div>
 
