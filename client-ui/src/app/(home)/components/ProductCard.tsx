@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import Image from 'next/image';
 import React from 'react'
+import ToppingList from './ToppingList';
 
 export type Product = {
     id: string;
@@ -127,16 +128,15 @@ const ProductCard = ({
 
                                     </RadioGroup>
                                 </div>
+
+                                <ToppingList />
+
+
                             </div>
                         </div>
                     </DialogContent>
                 </Dialog>
 
-
-
-                {/* <Button>
-                    Choose
-                </Button> */}
             </CardFooter>
         </Card>
 
