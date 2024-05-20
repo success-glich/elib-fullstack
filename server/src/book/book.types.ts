@@ -13,3 +13,10 @@ export interface Book{
     updatedAt:Date;
 
 }
+
+export interface updatedBook {
+    genre: string;
+    title: string;
+    coverImage?: string;
+    file?: string;
+  }
