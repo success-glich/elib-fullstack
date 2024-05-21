@@ -1,3 +1,4 @@
+"use client"
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -7,6 +8,8 @@ import Image from 'next/image';
 import React from 'react'
 import ToppingList from './ToppingList';
 import { ShoppingCart } from 'lucide-react';
+import { useAppDispatch } from '@/lib/store/hooks';
+import { addToCart } from '@/lib/features/cart/cartSlice';
 
 export type Product = {
     id: string;
@@ -22,6 +25,11 @@ type PropsTypes = {
 const ProductCard = ({
     product
 }: PropsTypes) => {
+    const dispatch = useAppDispatch();
+
+    const handleAddToCart = (productId: string) => {
+        dispatch(addToCart(productId))
+    }
     return (
         <Card className='border-none rounded-xl'>
             <CardHeader className='flex items-center justify-center'>
@@ -37,8 +45,9 @@ const ProductCard = ({
                     <span className='font-bold'>Rs. {product.price}</span>
                 </p>
 
+                <button onClick={() => handleAddToCart(product.id)}> Add to cart</button>
 
-                <Dialog>
+                {/* <Dialog>
                     <DialogTrigger className='text-primary bg-primary/15 hover:bg-primary/25 px-6 py-2 rounded-full shadow hover:shadow-lg outline-none  ease-linear transition-all duration-150'> Choose </DialogTrigger>
                     <DialogContent className='max-w-3xl p-0'>
                         <div className='flex '>
@@ -141,7 +150,7 @@ const ProductCard = ({
                             </div>
                         </div>
                     </DialogContent>
-                </Dialog>
+                </Dialog> */}
 
             </CardFooter>
         </Card>

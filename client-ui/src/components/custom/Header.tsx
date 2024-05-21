@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import Link from 'next/link'
 import { Phone, ShoppingCart } from 'lucide-react'
 import { Button } from '../ui/button'
+import AddToCartButton from './AddToCartButton'
 
 const Header = () => {
     return (
@@ -43,15 +44,8 @@ const Header = () => {
                             <Link className='hover:text-primary' href="/">Order</Link>
                         </li>
                     </ul>
-                    <div className='relative'>
-                        <Link href={"/"}>
-                            <ShoppingCart className='hover:text-primary' />
-                        </Link>
-                        <span className='absolute -top-4 -right-3 h-6 w-6 flex items-center justify-center rounded-full bg-primary font-bold text-white'>
-                            3
-                        </span>
-                    </div>
 
+                    <AddToCartButton />
                     <div className='flex item-center gap-2 ml-9'>
                         <Phone />
                         <span>+977-980022222</span>

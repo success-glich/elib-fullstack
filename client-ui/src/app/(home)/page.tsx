@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import ProductCard, { Product } from "./components/ProductCard";
+import DataSetter from "./components/data-setter";
 
 
 const products: Product[] = [
@@ -14,8 +15,18 @@ const products: Product[] = [
 
 
 export default function Home() {
+
+  // In real life it will come from external apis -> fetch.
+
+  const data = {
+    id: 1,
+    name: '',
+    description: 'lorem22jlkj sdlfjsdkf'
+  }
+
   return (
     <>
+      <DataSetter data={data} />
       <section className="bg-white">
         <div className="container py-24">
           <div className="flex items-center justify-between">
