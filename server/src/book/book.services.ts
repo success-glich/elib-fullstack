@@ -1,14 +1,13 @@
-// interface CreateUserOptions {
-//   name: string;
-//   email: string;
-//   password: string;
-
 interface CreateBookOptions {
   genre: string;
   title: string;
   coverImage: string;
+  author:string;
+  description:string;
   file: string;
 }
+
+import { Error } from "mongoose";
 import BookModel from "./book.model";
 import { updatedBook } from "./book.types";
 
@@ -21,7 +20,8 @@ class BookService {
       const book = await this.bookModel.create(options);
       return book;
     } catch (err) {
-      throw new Error("Error creating book");
+      
+     throw new Error(err instanceof Error ? err.message:"error uploading data on database server"  );
     }
   }
   async deleteBookById(id:string){

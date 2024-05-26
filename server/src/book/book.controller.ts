@@ -14,18 +14,20 @@ interface UserRequest extends Request {
 const BookController = {
   createBook: async (req: UserRequest, res: Response, next: NextFunction) => {
     try {
-      const { genre, title } = req.body;
+      const { genre, title,description} = req.body;
 
       if (
-        [genre, title].some(
+        [genre, title,description].some(
           (field) => field === undefined || field.trim() === ""
         )
       ) {
         next(createHttpError(400, "All field are required."));
       }
+    
+
 
       const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-
+     
       const coverImagePath = files?.coverImage[0]?.path;
       const filePath = files?.file[0]?.path;
 
@@ -39,21 +41,24 @@ const BookController = {
         next(createHttpError(500, "Error uploading cover Image or file."));
       }
 
+      console.log("business logic")
+      // * business logic
       const createdBook = await bookServices.createBook({
         genre,
         title,
+        description,
+        author:req.user?._id!,
         coverImage: coverImage?.secure_url!,
         file: file?.secure_url!,
       });
-
       if (!createdBook) {
         next(createHttpError(500, "Error creating book."));
       }
-
-      res
+     return res
         .status(201)
         .json(new ApiResponse(201, createdBook, "Book created successfully."));
     } catch (err) {
+      console.log("Error while creating books::",err)
       if (err instanceof Error) {
         next(createHttpError(500, err.message));
       }

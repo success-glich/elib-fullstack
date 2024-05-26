@@ -24,7 +24,6 @@ interface UserRequest extends Request {
             const error = createHttpError(401, 'Bearer token is not provided.');
             return next(error);
         }
-        const {sub} = token;
 
         try {
 
