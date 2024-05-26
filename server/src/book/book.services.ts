@@ -34,7 +34,7 @@ class BookService {
   }
   async getAllBooks() {
     try {
-      const books = await this.bookModel.find();
+      const books = await this.bookModel.find().populate("author");
       return books;
     } catch (err) {
       throw new Error("Error getting books");
@@ -42,7 +42,7 @@ class BookService {
   }
   async getBookById(id:string){
     try {
-      const book = await this.bookModel.findById(id);
+      const book = await this.bookModel.findById(id).populate("author");
       return book;
     } catch (err) {
       throw new Error("Error getting book");
