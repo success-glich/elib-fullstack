@@ -41,7 +41,6 @@ const BookController = {
         next(createHttpError(500, "Error uploading cover Image or file."));
       }
 
-      console.log("business logic")
       // * business logic
       const createdBook = await bookServices.createBook({
         genre,
@@ -202,5 +201,27 @@ const BookController = {
       next(createHttpError(500, "Error While updating book."));
     }
   },
+  getBookById: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const {bookId}= req.params;
+      
+      const book = await bookServices.getBookById(bookId);
+
+      return res.status(200).json(
+        new ApiResponse(200,book,"Books found successfully!",)
+      )
+    } catch (err) {
+      console.log("Error while getting book by id!");
+      if (err instanceof Error) {
+        next(createHttpError(500, err.message));
+      }
+      next(createHttpError(500, "Error While updating book."));
+    }
+  },
+  
 };
 export default BookController;

@@ -9,6 +9,7 @@ import AuthMiddleware from '../middlewares/authenticate.middleware';
 const bookRouter =express.Router();
 
 bookRouter.get("/",BookController.getAllBooks);
+bookRouter.get("/:bookId", BookController.getBookById);
 
 bookRouter.use(AuthMiddleware.isAuthenticated);
 
