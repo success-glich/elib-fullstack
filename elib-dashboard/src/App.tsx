@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <h1>Welcome elib-dashboard</h1>
-      <Button>Go to dashboard</Button>
+      <Button >Go to dashboard</Button>
     </>
   )
 }
