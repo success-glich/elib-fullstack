@@ -188,6 +188,8 @@ const BookController = {
   ) => {
     try {
       
+      //  delaying server
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       const allBooks = await bookServices.getAllBooks();
 
       return res.status(200).json(
