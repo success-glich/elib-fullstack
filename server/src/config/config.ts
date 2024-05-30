@@ -3,6 +3,7 @@ dotenv();
 
 const _config ={
     port:String(process.env.PORT),
+    frontendDomain:String(process.env.FRONTEND_DOMAIN),
     databaseUri:String(process.env.MONGODB_URI),
     env:String(process.env.NODE_ENV),
     jwtSecret:String(process.env.JWT_SECRET),
