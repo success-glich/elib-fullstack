@@ -4,6 +4,8 @@ import { config } from "./config/config";
 import globalErrorHandler from "./middlewares/global.error.handler";
 import userRouter from "./user/user.router";
 import bookRouter from "./book/book.router";
+import cors from "cors";
+
 const app = express();
 
 // routes HTTP Method -> PUT,POST, PUT,PATCH, DELETE
@@ -17,6 +19,11 @@ app.get('/',(req,res)=>{
     })
 
 })
+
+
+app.use(cors({
+    origin:config.frontendDomain
+}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
