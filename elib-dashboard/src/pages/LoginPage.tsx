@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { login } from "@/http/api"
 import { useMutation } from "@tanstack/react-query"
+import { LoaderCircle } from "lucide-react"
 import { useRef } from "react"
 import { Link,useNavigate } from "react-router-dom"
 
@@ -43,6 +44,7 @@ import { Link,useNavigate } from "react-router-dom"
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
           Enter your email below to login to your account.
+          {mutation.isPending &&<div>Loading....</div>}
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
@@ -56,7 +58,14 @@ import { Link,useNavigate } from "react-router-dom"
         </div>
       </CardContent>
       <CardFooter>
-       <div className="w-full"> <Button className="w-full" onClick={handleLoginSubmit}>Sign in</Button>
+       <div className="w-full"> 
+       <Button className="w-full" onClick={handleLoginSubmit} disabled={mutation.isPending} >
+      
+        {mutation.isPending && 
+         <LoaderCircle className="animate-spin"/>
+        }
+        <span className="ml-2 ">{`${mutation.isPending ?"Processing...":"Sign In"}`} </span>
+       </Button>
         <div className="mt-4 text-center text-sm">
         Already have an account?{" "}
         <Link to="/auth/register" className="underline">
