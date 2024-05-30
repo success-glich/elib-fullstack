@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { register } from "@/http/api"
+import useTokenStore from "@/store"
 import { Label } from "@radix-ui/react-label"
 import { useMutation } from "@tanstack/react-query"
 import { LoaderCircle } from "lucide-react"
@@ -13,12 +14,14 @@ const RegisterPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  
+  const setToken = useTokenStore((state)=>state.setToken)
   const mutation = useMutation({
     mutationFn:register,
-    onSuccess: () => {
+    onSuccess: (res) => {
       console.log("Login successfully")
       //redirect to home page
+      setToken(res.data.data.accessToken)
+      navigate("/dashboard/home")
       navigate("/dashboard/home")
       
     },

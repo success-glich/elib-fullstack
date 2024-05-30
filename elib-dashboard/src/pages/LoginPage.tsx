@@ -28,7 +28,7 @@ import { Link,useNavigate } from "react-router-dom"
     onSuccess: (res) => {
       console.log("Login successfully")
       //redirect to home page
-       setToken(res.data.data.accessToken)
+      setToken(res.data.data.accessToken)
       navigate("/dashboard/home")
       
     },
