@@ -44,7 +44,8 @@ import { Link,useNavigate } from "react-router-dom"
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
           Enter your email below to login to your account.
-          {mutation.isPending &&<div>Loading....</div>}
+          <br />
+          {mutation.isError && <span className="text-red-500 text-sm">{mutation.error.message}</span>}
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
