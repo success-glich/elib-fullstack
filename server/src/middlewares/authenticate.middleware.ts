@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import UserModel from "../user/user.models";
 import TokenHelper from "../helper/TokenHelper";
-import { User } from "../user/user.types";
+import { User, USER_ROLE } from "../user/user.types";
 
 
 interface UserRequest extends Request {
@@ -42,6 +42,26 @@ interface UserRequest extends Request {
 
             
         }
+    },
+    isAdminAuth:async(req:UserRequest,res:Response,next:NextFunction)=>{
+
+           try {
+            const user = req.user;
+            if(!user){
+                const error = createHttpError(401,"Unauthorized user");
+                return next(error);
+            }
+            if(user.role!==USER_ROLE.admin){
+                return next(createHttpError(403,"You don't have the authorized to access it"));
+                
+            }
+        } catch (err) {
+            console.log("err",err)
+            if(err instanceof Error)
+                return next(createHttpError(401,err?.message));
+            return next(createHttpError(401,'Invalid token'));
+        }
+
     }
 }
 

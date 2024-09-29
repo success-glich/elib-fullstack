@@ -1,3 +1,4 @@
+import { Review } from "../review/review.types";
 import { User } from "../user/user.types";
 
 
@@ -10,6 +11,7 @@ export interface Book{
     description:string;
     coverImage:string;
     file:string;
+    reviews:Review;
     createdAt:Date;
     updatedAt:Date;
 

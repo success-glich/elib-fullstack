@@ -1,9 +1,9 @@
 import express from 'express';
 import BookController from './book.controller';
-import multer from 'multer';
-import path from 'path';
 import { upload } from '../middlewares/multer.middleware';
 import AuthMiddleware from '../middlewares/authenticate.middleware';
+import { authorizeRole } from '../middlewares/authorization.middlware';
+import { USER_ROLE } from '../user/user.types';
 
 
 const bookRouter =express.Router();
@@ -12,6 +12,7 @@ bookRouter.get("/",BookController.getAllBooks);
 bookRouter.get("/:bookId", BookController.getBookById);
 
 bookRouter.use(AuthMiddleware.isAuthenticated);
+bookRouter.use(authorizeRole(USER_ROLE.admin));
 
 bookRouter
 .route("/")

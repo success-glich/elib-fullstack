@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-query'
 
 import App from './router.tsx'
+import { Toaster } from './components/ui/toaster.tsx'
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient} >
       <App />
+      <Toaster />    
     </QueryClientProvider>
   </React.StrictMode>,
 )

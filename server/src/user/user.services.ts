@@ -1,12 +1,12 @@
-import createHttpError from "http-errors";
 import UserModel from "./user.models";
-import bcrypt from "bcryptjs";
 import authHelper from "./user.helper";
 import TokenHelper from "../helper/TokenHelper";
+import { USER_ROLE } from "./user.types";
 interface CreateUserOptions {
   name: string;
   email: string;
   password: string;
+  role:string
 }
 class UserServices {
   constructor(private readonly userModel: typeof UserModel) {}
@@ -14,6 +14,7 @@ class UserServices {
     name,
     email,
     password,
+    role=USER_ROLE.user
   }: CreateUserOptions):  Promise<{ registerUser: any; accessToken: string }> {
 
     try{
@@ -30,6 +31,7 @@ class UserServices {
         name,
         email,
         password: hashedPassword,
+        role
     });
     
     await newUser.save();

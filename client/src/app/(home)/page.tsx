@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import BookList from "./components/BookList";
+import BookCardLoader from "./components/BookCardLoader";
 
 export default function Home() {
+
   return (
     <>
       <section className="bg-secondary">
@@ -20,12 +21,14 @@ export default function Home() {
         </div>
       </section>
 
-    {/* book list */}
+
+      {/* book list */}
       <section className="container py-8">
-        <Suspense fallback={"loading...."}>
-          <BookList/>
+        <Suspense fallback={<BookCardLoader />}>
+          <BookList />
         </Suspense>
       </section>
+
 
     </>
 

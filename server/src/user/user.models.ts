@@ -1,5 +1,5 @@
-import mongoose, { Mongoose, Schema } from "mongoose";
-import { User } from "./user.types";
+import mongoose, {  Schema } from "mongoose";
+import { User, USER_ROLE } from "./user.types";
 
 
 const userSchema: Schema<User> = new mongoose.Schema(
@@ -17,6 +17,12 @@ const userSchema: Schema<User> = new mongoose.Schema(
       type: String, 
       required: true
     },
+    role:{
+      type:String,
+      default:USER_ROLE.user,
+       
+
+    }
   },
   { timestamps: true }
 );

@@ -1,7 +1,5 @@
-import mongoose, { Mongoose, Schema } from "mongoose";
+import mongoose, {Schema } from "mongoose";
 import { Book } from "./book.types";
-
-
 
 const bookSchema: Schema<Book> = new mongoose.Schema(
   {
@@ -30,8 +28,11 @@ const bookSchema: Schema<Book> = new mongoose.Schema(
     genre:{
          type:String,
          required:true
-    }
-   
+    },
+    reviews:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"Review",
+    }]
   
   },
   { timestamps: true }

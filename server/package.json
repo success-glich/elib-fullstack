@@ -4,10 +4,13 @@
   "description": "This ebook api project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.ts",
-    "start": "node server.js",
-    "eslint": "npm run eslint"
+    "start": "node ./dist/server.js",
+    "eslint": "npm run eslint",
+    "test-model": "ts-node bayes.ts",
+    "build": "tsc",
+    "docker-publish": "docker build --platform linux/amd64 -t iamsaphal21/elib-server:v1 . && docker push iamsaphal21/elib-server:v1",
+    "pm2-dev": "pm2-runtime start ecosystem.config.js"
   },
   "keywords": [
     "rest",
@@ -24,6 +27,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/multer": "^1.4.11",
     "@types/node": "^20.12.7",
+    "@types/stopword": "^2.0.3",
     "eslint": "^8.57.0",
     "globals": "^15.0.0",
     "nodemon": "^3.1.0",
@@ -37,11 +41,17 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.1.0",
     "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
+    "mathjs": "^13.0.3",
     "mongoose": "^8.3.1",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "natural": "^8.0.1",
+    "pm2": "^5.4.1",
+    "stopword": "^3.1.1"
   }
 }
